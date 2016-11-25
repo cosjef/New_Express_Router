@@ -7,6 +7,7 @@ var express = require('express');
 var app     = express();
 var port    =   process.env.PORT || 8080;
 
+
 // ROUTES
 // ==============================================
 
@@ -27,21 +28,34 @@ var router = express.Router();
 // We’ll use router.use() to define middleware
 router.use(function(req, res, next) {
 	
-	// route with parameters (http://localhost:8080/hello/:name)
+// route with parameters (http://localhost:8080/hello/:name)
 		router.get('/hello/:name', function(req, res) {
 			res.send('hello ' + req.params.name + '!');
 			
-		});
-			
-	
-	
-	// log each request to the console
+		});		
+// log each request to the console
 	console.log(req.method, req.url);
 	
 	// continue doing what we were doing and go to the route
 	next();
 	
 });
+
+
+app.route('/login')
+
+// show the form (GET http://localhost:8080/login)
+	.get(function(req, res) {
+		res.send('this is the login form');
+	})
+	
+	// process the form (POST http://localhost:8080/login)
+		.post(function(req, res) {
+			console.log('processing');
+			res.send('processing the login from!');
+		});
+
+
 
 // home page route (http://localhost:8080)
 	router.get('/', function(req, res) {
